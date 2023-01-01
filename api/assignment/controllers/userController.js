@@ -74,7 +74,7 @@ const login = (req, res) => {
         console.log("je me log en base")
         bcrypt.compare(password, user.password).then((isMatch) => {
             if (isMatch) {
-                res.json( "Bearer "+obtenirUntoken({id: user.id, name: user.name, email: user.email, role: user.role}))
+                res.json( {msg: "Bearer "+obtenirUntoken({id: user.id, name: user.name, email: user.email, role: user.role})})
             } else {
                 return res.json({msg :"Password incorrect"});
             }
