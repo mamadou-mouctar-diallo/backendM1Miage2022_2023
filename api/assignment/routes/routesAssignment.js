@@ -1,14 +1,14 @@
 const {getAssignments, postAssignment, deleteAssignment, updateAssignment} = require("../controllers/assigmnentController");
-const passport = require('passport');
+const {protectedRequest} = require("../controllers/userController");
 const router = require('express').Router();
 
 router.get('/assignments', (req, res) => getAssignments(req, res));
 
-router.post('/assignments/add', (req, res) => postAssignment(req, res));
+router.post('/assignments/add',protectedRequest, (req, res) => postAssignment(req, res));
 
-router.delete('/asignments/delete', (req, res) => deleteAssignment(req, res));
+router.delete('/asignments/delete/:id',protectedRequest, (req, res) => deleteAssignment(req, res));
 
-router.put('/assignments/update/:id',(req, res) => updateAssignment(req, res));
+router.put('/assignments/update/:id',protectedRequest, (req, res) => updateAssignment(req, res));
 
 
 module.exports = router;

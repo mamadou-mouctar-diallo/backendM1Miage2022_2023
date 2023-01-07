@@ -50,31 +50,26 @@ function postAssignment(req, res){
     })
 }
 
-// Update d'un assignment (PUT)
 function updateAssignment(req, res) {
     console.log("UPDATE recu assignment : ");
-    console.log(req.body);
-    Assignment.findByIdAndUpdate(req.body._id, req.body, {new: true}, (err, assignment) => {
+    console.log(req.body)
+    Assignment.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, obj) => {
         if (err) {
             console.log(err);
-            res.send(err)
-        } else {
-            res.json({message: 'updated'})
+         return  res.json({err: 'impossible de mettre à jour ce devoir'})
         }
-
-        // console.log('updated ', assignment)
+        res.json({msg: `le devoir ${req.body.name} a été mis à jour`})
     });
 
 }
 
-// suppression d'un assignment (DELETE)
 function deleteAssignment(req, res) {
 
-    Assignment.findByIdAndRemove(req.params._id, (err, assignment) => {
+    Assignment.findByIdAndRemove(req.params.id, (err) => {
         if (err) {
             res.send(err);
         }
-        res.json({message: `${assignment.name} deleted`});
+        res.json({message: `le devoir ${req.body.name} a été supprimé`});
     })
 }
 
