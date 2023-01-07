@@ -70,14 +70,14 @@ const login = (req, res) => {
     User.findOne({ email }).then((user) => {
         console.log(user)
         if (!user) {
-            return res.json({msg: "User not found"});
+            return res.json({msg: "Cet utilisateur n'existe pas"});
         }
         console.log("je me log en base")
         bcrypt.compare(password, user.password).then((isMatch) => {
             if (isMatch) {
-                res.json( {msg: "Bearer "+obtenirUntoken({id: user.id, name: user.name, email: user.email, role: user.role})})
+                res.json( {msg: "bearer "+obtenirUntoken({id: user.id, name: user.name, email: user.email, role: user.role})})
             } else {
-                return res.json({msg :"Password incorrect"});
+                return res.json({msg :"Le mot de passe est incorrect"});
             }
         });
     });
@@ -90,22 +90,41 @@ const obtenirUntoken = (user)=>{
 }
 
 const protectedRequest = (req, res, next) =>{
-    console.log(req.headers.authorization)
     let token
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+    if(req.headers.authorization && req.headers.authorization.startsWith('bearer')){
         try {
             token = req.headers.authorization.split(' ')[1];
             const decodedtoken = jwt.verify(token, "ilovemymum");
             req.user = User.findById(decodedtoken.id).select('-password');
-
             next();
         }catch (e) {
-                res.json({msg: "Attention vous n'etes pas autorise"})
+                res.json({auth: "Attention vous n'etes pas autorise"})
         }
     }
     if(!token){
-        res.json({msg: "Attention vous n'etes pas autorise"})
+        res.json({auth: "Attention vous n'etes pas autorise"})
     }
 }
 
-module.exports = {addUser, getAll, getCurrentUser, login, protectedRequest}
+const deleteUser = (req, res) => {
+    User.findByIdAndRemove(req.params.id, (err, user) => {
+        if(err){
+            return res.json({ msg: "Cet utilisateur n'existe pas"})
+        }
+        res.json({
+            msg: `l'utilisateur ${user.name} a été supprimé`
+        })
+    });
+
+}
+
+const updateUser = (req, res) => {
+    User.findByIdAndUpdate(req.params.id, {new: true}, (err, user) => {
+        if(err){
+            res.json({msg: 'impossible de mettre à jour cet utilisateur'})
+        }
+        res.json({msg: `l'utilisateur ${user.name} a été mis à jour`})
+    })
+}
+
+module.exports = {addUser, getAll, getCurrentUser, login,deleteUser, updateUser, protectedRequest}
