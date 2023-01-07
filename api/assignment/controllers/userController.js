@@ -30,12 +30,13 @@ const addUser = (req, res) => {
             user.email = req.body.email;
             user.password = req.body.password;
             user.role  = req.body.role;
-            user.photo = req.body.photo !== "" ? req.body.photo: avatar;
+            user.photo = avatar;
             console.log(user)
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(user.password, salt, (err, hash) => {
                     if (err) throw err;
                     user.password = hash;
+                    console.log(user);
                     user.save()
                         .then((user, err) =>{
                             if (err){
