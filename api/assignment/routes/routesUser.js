@@ -9,9 +9,9 @@ router.post('/users/login', (req, res) => login(req, res))
 
 router.post('/users/add', protectedRequest,  (req, res) => addUser(req, res));
 
-router.delete('users/delete/:id', protectedRequest, (req, res) => deleteUser(req, res))
+router.delete('/users/delete/:id', protectedRequest, (req, res) => deleteUser(req, res))
 
-router.put('users/update/:id', protectedRequest, (req, res) => updateUser(req, res))
+router.put('/users/update/:id', protectedRequest, (req, res) => updateUser(req, res))
 
 
 module.exports = router;
