@@ -65,11 +65,11 @@ function updateAssignment(req, res) {
 
 function deleteAssignment(req, res) {
 
-    Assignment.findByIdAndRemove(req.params.id, (err) => {
+    Assignment.findByIdAndRemove(req.params.id, (err, assignment) => {
         if (err) {
             res.send(err);
         }
-        res.json({message: `le devoir ${req.body.name} a été supprimé`});
+        res.json({msg: `le devoir ${assignment.name} a été supprimé`});
     })
 }
 
