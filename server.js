@@ -21,8 +21,6 @@ mongoose
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log(err));
 
-app.use(passport.initialize());
-
 // Pour accepter les connexions cross-domain (CORS)
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
