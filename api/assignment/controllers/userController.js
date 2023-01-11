@@ -121,13 +121,27 @@ const deleteUser = (req, res) => {
 
 const updateUser = (req, res) => {
     console.log("UPDATE recu User : ");
-    console.log(req.body)
-    User.findByIdAndUpdate(req.params.id,req.body, {new: true}, (err, user) => {
-        if(err){
-            res.json({msg: 'impossible de mettre à jour cet utilisateur'})
+    let user = {
+        id: req.body.id,
+        _id: req.body._id,
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role
         }
-        res.json({msg: `l'utilisateur ${user.name} a été mis à jour`})
-    })
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) throw err;
+            user.password = hash;
+            User.findByIdAndUpdate(req.params.id,user, {new: true}, (err, user) => {
+                if(err){
+                    res.json({msg: 'impossible de mettre à jour cet utilisateur'})
+                }
+                res.json({msg: `l'utilisateur ${user.name} a été mis à jour`})
+            })
+        });
+    });
+
 }
 
 module.exports = {addUser, getAll, getCurrentUser, login,deleteUser, updateUser, protectedRequest}
