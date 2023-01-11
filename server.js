@@ -4,7 +4,6 @@ let bodyParser = require('body-parser');
 const mongodbURI = require('./api/utils/keys').mongodbURI
 let assignment = require('./api/assignment/routes/routesAssignment');
 let user = require('./api/assignment/routes/routesUser');
-const passport = require("passport")
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -40,8 +39,6 @@ let port = process.env.PORT || 8015;
 
 // les routes
 const prefix = '/api';
-
-require('./api/utils/passport')(passport);
 
 //Route pour les assignments
 
