@@ -107,6 +107,7 @@ const protectedRequest = (req, res, next) =>{
 }
 
 const deleteUser = (req, res) => {
+    console.log(req.params.id);
     User.findByIdAndRemove(req.params.id, (err, user) => {
         if(err){
             return res.json({ msg: "Cet utilisateur n'existe pas"})
@@ -119,7 +120,9 @@ const deleteUser = (req, res) => {
 }
 
 const updateUser = (req, res) => {
-    User.findByIdAndUpdate(req.params.id, {new: true}, (err, user) => {
+    console.log("UPDATE recu User : ");
+    console.log(req.body)
+    User.findByIdAndUpdate(req.params.id,req.body, {new: true}, (err, user) => {
         if(err){
             res.json({msg: 'impossible de mettre à jour cet utilisateur'})
         }
