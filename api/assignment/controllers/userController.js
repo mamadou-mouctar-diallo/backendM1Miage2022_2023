@@ -85,7 +85,7 @@ const login = (req, res) => {
 
 const obtenirUntoken = (user)=>{
     return jwt.sign(user, "ilovemymum",{
-        expiresIn: 3600,
+        expiresIn: 15,
     })
 }
 
