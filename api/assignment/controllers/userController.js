@@ -17,7 +17,7 @@ const addUser = (req, res) => {
     console.log("je fais un post")
     User.findOne({ email: req.body.email }).then((user) => {
         if (user) {
-            return res.json({msg: "Email already exists"});
+            return res.json({msg: "Cet email existe dejq"});
         } else {
             const avatar = gravatar.url(req.body.email, {
                 s: 200, // Size
@@ -41,11 +41,11 @@ const addUser = (req, res) => {
                     user.save()
                         .then((user, err) =>{
                             if (err){
-                                return  res.json({msg: "failled to save the user"})
+                                return  res.json({msg: "Echec de l'enregistrement"})
                             }
-                            return res.json({token: obtenirUntoken({id: user.id, name: user.name, email: user.email, role: user.role})})
+                            return res.json({msg: `L'utilisateur ${user.name} a été  ajouté`})
                         })
-                        .catch(err => res.json({message: 'Sorry there is a problem to save the user'}))
+                        .catch(err => res.json({message: 'Echec de l\'enregistrement'}))
                 });
             });
         }

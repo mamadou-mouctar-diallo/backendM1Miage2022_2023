@@ -44,9 +44,9 @@ function postAssignment(req, res){
 
     assignment.save( (err) => {
         if(err){
-            res.json({msg: "il y a eu erreur lors de l'ajout de l'assignment"});
+            res.json({err: "il y a eu erreur lors de l'ajout de l'assignment"});
         }
-        res.json({ message: `${assignment.name} saved!`})
+        res.json({ msg: `Le devoir ${assignment.name} a été ajouté`})
     })
 }
 
