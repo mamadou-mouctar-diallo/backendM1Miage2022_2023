@@ -2,6 +2,7 @@ const User = require('../models/user')
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar')
 const jwt = require("jsonwebtoken");
+const {secretAccessKey} = require("../../utils/keys");
 
 const getAll = (req, res) =>{
     User.find((err, user) => {
@@ -84,26 +85,9 @@ const login = (req, res) => {
 }
 
 const obtenirUntoken = (user)=>{
-    return jwt.sign(user, "ilovemymum",{
+    return jwt.sign(user, secretAccessKey,{
         expiresIn: 3600,
     })
-}
-
-const protectedRequest = (req, res, next) =>{
-    let token
-    if(req.headers.authorization && req.headers.authorization.startsWith('bearer')){
-        try {
-            token = req.headers.authorization.split(' ')[1];
-            const decodedtoken = jwt.verify(token, "ilovemymum");
-            req.user = User.findById(decodedtoken.id).select('-password');
-            next();
-        }catch (e) {
-                res.json({auth: "Attention vous n'etes pas autorise"})
-        }
-    }
-    if(!token){
-        res.json({auth: "Attention vous n'etes pas autorise"})
-    }
 }
 
 const deleteUser = (req, res) => {
@@ -144,4 +128,4 @@ const updateUser = (req, res) => {
 
 }
 
-module.exports = {addUser, getAll, getCurrentUser, login,deleteUser, updateUser, protectedRequest}
+module.exports = {addUser, getAll, getCurrentUser, login,deleteUser, updateUser}

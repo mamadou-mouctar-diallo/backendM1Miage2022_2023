@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongodbURI = require('./api/utils/keys').mongodbURI
 const assignment = require('./api/assignment/routes/routesAssignment');
 const user = require('./api/assignment/routes/routesUser');
+const util = require('./api/assignment/routes/routesUtil')
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -45,6 +46,8 @@ app.use(prefix, assignment)
 //Route pour les utilisateurs
 
 app.use(prefix, user)
+
+app.use(prefix, util)
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
