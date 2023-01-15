@@ -12,14 +12,14 @@ const isAuthorizedToDelete = (method, role) =>{
             token = req.headers.authorization.split(' ')[1];
             const decodedtoken = jwt.verify(token, secretAccessKey);
             req.user = User.findById(decodedtoken.id).select('-password');
-            if(isAuthorizedToDelete(req.method, decodedtoken.role)) return res.json({auth: "Attention vous n'etes pas autorise"})
+            if(isAuthorizedToDelete(req.method, decodedtoken.role)) return res.json({auth: "Attention vous n'êtes pas autoriés"})
             next();
         }catch (e) {
-            res.json({auth: "Attention vous n'etes pas autorise"})
+            res.json({auth: "Attention vous n'êtes pas autoriés"})
         }
     }
     if(!token){
-        res.json({auth: "Attention vous n'etes pas autorise"})
+        res.json({auth: "Attention vous n'êtes pas autoriés"})
     }
 }
 
