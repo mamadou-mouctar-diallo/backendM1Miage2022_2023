@@ -116,7 +116,10 @@ const updateUser = (req, res) => {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(user.password, salt, (err, hash) => {
             if (err) throw err;
-            user.password = hash;
+            if(user.password[0]!=='$'){
+                user.password = hash;
+            }
+
             User.findByIdAndUpdate(req.params.id,user, {new: true}, (err, user) => {
                 if(err){
                     res.json({msg: 'impossible de mettre à jour cet utilisateur'})
