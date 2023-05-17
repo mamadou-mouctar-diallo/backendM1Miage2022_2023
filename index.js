@@ -5,6 +5,7 @@ const mongodbURI = require('./api/utils/keys').mongodbURI
 const assignment = require('./api/assignment/routes/routesAssignment');
 const user = require('./api/assignment/routes/routesUser');
 const util = require('./api/assignment/routes/routesUtil')
+const image = require('./api/assignment/routes/routesImage')
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -48,6 +49,8 @@ app.use(prefix, assignment)
 app.use(prefix, user)
 
 app.use(prefix, util)
+
+app.use(prefix, image);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
