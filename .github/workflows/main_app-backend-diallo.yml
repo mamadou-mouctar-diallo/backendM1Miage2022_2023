@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'app-backend-diallo'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A4EE3726F69B422788FADA3F1AB33537 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_85D7C0ED824C4637B44EF085C1899AB6 }}
           package: .
